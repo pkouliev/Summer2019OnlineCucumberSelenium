@@ -15,6 +15,7 @@ public class LoginStepDefinitions {
     @Then("user logs in as store manager")
     public void user_logs_in_as_store_manager() {
         System.out.println("login as store manager");
+     //   throw new RuntimeException("Test failed for some reason");
     }
 
     /**
@@ -36,5 +37,26 @@ public class LoginStepDefinitions {
     @Then("user logs in as sales manager")
     public void user_logs_in_as_sales_manager() {
         System.out.println("Login as sales manager");
+    }
+
+    /**
+     * Then user enters "storemanager85" username and "wrong" password
+     *
+     * @param string  "storemanager85" username
+     * @param string2 "wrong" password
+     */
+    @Then("user enters {string} username and {string} password")
+    public void user_enters_username_and_password(String string, String string2) {
+        System.out.println("Login with " + string + " username and " + string2 + " password");
+    }
+
+    /**
+     * And user verifies that "Invalid user name or password." message is displayed
+     *
+     * @param string "Invalid user name or password." message
+     */
+    @Then("user verifies that {string} message is displayed")
+    public void user_verifies_that_message_is_displayed(String string) {
+        System.out.println("Verified that warning message is displayed: " + string);
     }
 }
