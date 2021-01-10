@@ -31,4 +31,10 @@ Feature: Login
     Then user enters "storemanager85" username and "wrong" password
     And user verifies that "Invalid user name or password." message is displayed
 
+  @negative_test
+  Scenario: Verify that warning message is displayed when password is not correct
+    Given user is on the login page
+    Then user enters "wrong_username" username and "UserUser123" password
+    And user verifies that "Invalid user name or password." message is displayed
+
 
