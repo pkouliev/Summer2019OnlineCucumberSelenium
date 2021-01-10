@@ -1,6 +1,5 @@
 package com.vytrack.step_definitions;
 
-import com.vytrack.utilities.BrowserUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -27,7 +26,6 @@ public class LoginStepDefinitions {
     @Then("user verifies that {string} page subtitle is displayed")
     public void user_verifies_that_page_subtitle_is_displayed(String string) {
         System.out.println("Verifying page subtitle: " + string);
-        BrowserUtils.space();
     }
 
     @Then("user logs in as driver")
