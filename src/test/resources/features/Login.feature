@@ -25,7 +25,7 @@ Feature: Login
     Then user logs in as sales manager
     And user verifies that "Dashboard" page subtitle is displayed
 
-# Negative scenario
+  @negative_test
   Scenario: Verify that warning message is displayed when password is not correct
     Given user is on the login page
     Then user enters "storemanager85" username and "wrong" password
