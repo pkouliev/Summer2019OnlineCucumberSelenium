@@ -1,21 +1,31 @@
 package com.vytrack.step_definitions;
 
+import com.vytrack.pages.LoginPage;
+import com.vytrack.utilities.ConfigurationReader;
+import com.vytrack.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 
 public class LoginStepDefinitions {
 
     // Write code here that turns the phrase above into concrete actions
+    LoginPage loginPage = new LoginPage(); // created login page object
 
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
         System.out.println("I am on the login page");
+        Driver.getDriver().get(ConfigurationReader.getValue("url"));
     }
 
     @Then("user logs in as store manager")
     public void user_logs_in_as_store_manager() {
         System.out.println("login as store manager");
-     //   throw new RuntimeException("Test failed for some reason");
+        // we read username and password from properties file
+        // usually in java we use camel case for naming variables
+        String userName = ConfigurationReader.getValue("user_name");
+        String password = ConfigurationReader.getValue("password");
+        loginPage.login(userName, password);
     }
 
     /**
@@ -26,6 +36,8 @@ public class LoginStepDefinitions {
      */
     @Then("user verifies that {string} page subtitle is displayed")
     public void user_verifies_that_page_subtitle_is_displayed(String string) {
+        System.out.println(string);
+        Assert.assertEquals(string, loginPage.getPageSubTitle(string));
         System.out.println("Verifying page subtitle: " + string);
     }
 
@@ -37,6 +49,7 @@ public class LoginStepDefinitions {
     @Then("user logs in as sales manager")
     public void user_logs_in_as_sales_manager() {
         System.out.println("Login as sales manager");
+        // throw new RuntimeException("Test failed just because!");
     }
 
     /**
