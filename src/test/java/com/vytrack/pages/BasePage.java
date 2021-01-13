@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 //everything that is in common among pages
@@ -19,6 +20,8 @@ import java.util.NoSuchElementException;
 //top menu appears on every single page
 //so we can keep them here
 public class BasePage {
+
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
 
     @FindBy(css = "div[class='loader-mask shown']")
     public WebElement loaderMask;
@@ -34,6 +37,15 @@ public class BasePage {
 
     @FindBy(linkText = "My User")
     public WebElement myUser;
+
+    @FindBy(css = "[class*='btn d']")
+    public WebElement viewPerPageToggleElement;
+
+    @FindBy(className = "dropdown-item")
+    public List<WebElement> viewPerPageElements;
+
+    @FindBy(xpath = "//th/*[contains(@class,'grid-header-cell')]")
+    public List<WebElement> columnNamesElements;
 
     public BasePage() {
         //this method requires to provide webdriver object for @FindBy
@@ -52,7 +64,7 @@ public class BasePage {
     public boolean waitUntilLoaderMaskDisappear() {
 
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[class='loader-mask shown']")));
             return true;
         } catch (NoSuchElementException e) {
@@ -109,7 +121,6 @@ public class BasePage {
             BrowserUtils.waitForPresenceOfElement(By.xpath(subModuleLocator), 5);
             BrowserUtils.waitForClickablility(Driver.getDriver().findElement(By.xpath(subModuleLocator)), 5);
             BrowserUtils.scrollToElement(Driver.getDriver().findElement(By.xpath(subModuleLocator)));
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
             wait.until(ExpectedConditions.textToBePresentInElement(subModule, subModuleName));
             Driver.getDriver().findElement(By.xpath(subModuleLocator)).click();
         } catch (Exception e) {
@@ -126,7 +137,6 @@ public class BasePage {
      * @return page name, for example: Dashboard
      */
     public String getPageSubTitle(String subTitle) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
         waitUntilLoaderMaskDisappear();
         wait.until(ExpectedConditions.textToBePresentInElement(pageSubTitle, subTitle));
         return pageSubTitle.getText().trim();
@@ -151,7 +161,19 @@ public class BasePage {
     }
 
     public void waitForPageSubtitle(String pageSubtitleText) {
-        new WebDriverWait(Driver.getDriver(), 10).until(ExpectedConditions.textToBe(By.cssSelector("h1[class='oro-subtitle']"), pageSubtitleText));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("h1[class='oro-subtitle']"), pageSubtitleText));
+    }
+
+    public List<String> getViewPerPageOptions() {
+        BrowserUtils.waitForVisibility(viewPerPageToggleElement, 10);
+        BrowserUtils.clickWithWait(viewPerPageToggleElement);
+        return BrowserUtils.getListOfStrings(viewPerPageElements);
+    }
+
+    public List<String> getColumnNames() {
+        waitUntilLoaderMaskDisappear();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//th/*[contains(@class,'grid-header-cell')]")));
+        return BrowserUtils.getListOfStrings(columnNamesElements);
     }
 
 }
