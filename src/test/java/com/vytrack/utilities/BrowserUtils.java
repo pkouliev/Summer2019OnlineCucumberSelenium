@@ -179,10 +179,16 @@ public class BrowserUtils {
     public static List<String> getListOfStrings(List<WebElement> listOfWebElements) {
         List<String> listOfStrings = new ArrayList<>();
         for (WebElement element : listOfWebElements) {
-            listOfStrings.add(element.getText().trim());
+            String value = element.getText().trim();
+            // if there is no text
+            // do not add this blank text into list
+            if (!value.isEmpty()) {
+                listOfStrings.add(value);
+            }
         }
         return listOfStrings;
     }
+
 
     //marufcan's
     public static void clickWithWait(By by, int attempts) {
