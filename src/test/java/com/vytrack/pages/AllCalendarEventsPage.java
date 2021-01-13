@@ -4,7 +4,7 @@ import com.vytrack.utilities.BrowserUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CalendarEventsPage extends BasePage {
+public class AllCalendarEventsPage extends BasePage {
 
     @FindBy(css = "[title='Create Calendar event']")
     public WebElement createCalendarEvent;
