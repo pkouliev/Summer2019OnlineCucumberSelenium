@@ -32,6 +32,9 @@ public class LoginPage extends BasePage {
 //        PageFactory.initElements(driver, this);
 //    }
 
+    String userName = ConfigurationReader.getValue("user_name");
+    String password = ConfigurationReader.getValue("password");
+
     /**
      * reusable login method
      * just call this method to login, provide userName and password as parameters
@@ -45,14 +48,19 @@ public class LoginPage extends BasePage {
         passwordInput.sendKeys(password, Keys.ENTER);
     }
 
-    String userNameQA1 = ConfigurationReader.getValue("user_name");
-    String passwordQA1 = ConfigurationReader.getValue("password");
-
-    public void loginQA1() {
-        userNameInput.sendKeys(userNameQA1);
+    public void login() {
+        userNameInput.sendKeys(userName);
         // Keys.ENTER to replace login button click
-        passwordInput.sendKeys(passwordQA1, Keys.ENTER);
+        passwordInput.sendKeys(password, Keys.ENTER);
     }
 
-
+    public void login(String role) {
+        switch (role) {
+            case "driver" -> userName = ConfigurationReader.getValue("driver.username");
+            case "store manager" -> userName = ConfigurationReader.getValue("store.manager.username");
+            case "sales manager" -> userName = ConfigurationReader.getValue("sales.manager.username");
+            default -> new RuntimePermission("Invalid role");
+        }
+        login(userName, password);
+    }
 }
