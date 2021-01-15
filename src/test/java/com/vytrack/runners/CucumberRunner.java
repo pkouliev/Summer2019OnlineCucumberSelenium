@@ -10,9 +10,11 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/vytrack/step_definitions",
         dryRun = false,
-        tags = "@driver_with_data_table",
+        tags = "@smoke_test",
         plugin = {"html:target/default-cucumber-reports.html",
-                "json:target/cucumber.json"}
+                "json:target/cucumber.json",
+                "rerun:target/rerun.txt" // <---- to generate txt file with failed scenarios
+        }
 )
 public class CucumberRunner {
 
