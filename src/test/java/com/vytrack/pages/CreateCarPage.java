@@ -22,6 +22,12 @@ public class CreateCarPage extends BasePage {
     @FindBy(xpath = "//*[contains(text(),'Save and Close')]")
     public WebElement saveAndCloseButtonElement;
 
+    @FindBy(css = "[class*='btn-success b']")
+    public WebElement saveAndCloseToggle;
+
+    @FindBy(xpath = "//*[contains(text(),'Save and New')]")
+    public WebElement saveAndNewButtonElement;
+
     @FindBy(css = "div[id*='FuelType']")
     public WebElement fuelTypeElement;
 
@@ -98,5 +104,19 @@ public class CreateCarPage extends BasePage {
     public void enterLicensePlate(String licensePlate) {
         BrowserUtils.waitForVisibility(licensePlateElement, 15);
         licensePlateElement.sendKeys(licensePlate);
+    }
+
+    public void clickSaveAndNew() {
+        waitUntilLoaderMaskDisappear();
+        BrowserUtils.clickWithWait(saveAndCloseToggle);
+        BrowserUtils.waitForVisibility(saveAndNewButtonElement, 5);
+        BrowserUtils.clickWithWait(saveAndNewButtonElement);
+    }
+
+    public void clickSaveAndClose() {
+        waitUntilLoaderMaskDisappear();
+        BrowserUtils.clickWithWait(saveAndCloseToggle);
+        BrowserUtils.waitForVisibility(saveAndCloseButtonElement, 5);
+        BrowserUtils.clickWithWait(saveAndCloseButtonElement);
     }
 }
