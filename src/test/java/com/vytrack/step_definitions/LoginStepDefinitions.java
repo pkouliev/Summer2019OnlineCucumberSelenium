@@ -1,6 +1,7 @@
 package com.vytrack.step_definitions;
 
 import com.vytrack.pages.LoginPage;
+import com.vytrack.utilities.BrowserUtils;
 import com.vytrack.utilities.ConfigurationReader;
 import com.vytrack.utilities.Driver;
 import io.cucumber.java.en.Given;
@@ -63,6 +64,7 @@ public class LoginStepDefinitions {
     @Then("user enters {string} username and {string} password")
     public void user_enters_username_and_password(String string, String string2) {
         System.out.println("Login with " + string + " username and " + string2 + " password");
+        loginPage.login(string, string2);
     }
 
     /**
@@ -79,5 +81,16 @@ public class LoginStepDefinitions {
     public void user_logs_in_as_driver_with_following_credentials(Map<String, String> dataTable) {
         System.out.println(dataTable);
         loginPage.login(dataTable.get("username"), dataTable.get("password"));
+    }
+
+    @Then("user logs in as {string}")
+    public void user_logs_in_as(String role) {
+        loginPage.login(role);
+    }
+
+    @Then("the page title should be {string}")
+    public void the_page_title_should_be(String title) {
+        BrowserUtils.waitForPageTitle(title);
+        Assert.assertEquals("Title is incorrect", title, Driver.getDriver().getTitle());
     }
 }
