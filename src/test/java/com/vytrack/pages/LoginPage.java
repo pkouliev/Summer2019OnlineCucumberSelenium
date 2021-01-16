@@ -55,7 +55,6 @@ public class LoginPage extends BasePage {
     }
 
     public void login(String role) {
-        String userName;
         String password = ConfigurationReader.getValue("password");
 
         switch (role) {
