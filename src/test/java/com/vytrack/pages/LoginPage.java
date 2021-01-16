@@ -55,11 +55,21 @@ public class LoginPage extends BasePage {
     }
 
     public void login(String role) {
+        String userName;
+        String password = ConfigurationReader.getValue("password");
+
         switch (role) {
-            case "driver" -> userName = ConfigurationReader.getValue("driver.username");
-            case "store manager" -> userName = ConfigurationReader.getValue("store.manager.username");
-            case "sales manager" -> userName = ConfigurationReader.getValue("sales.manager.username");
-            default -> new RuntimePermission("Invalid role");
+            case "driver":
+                userName = ConfigurationReader.getValue("driver.username");
+                break;
+            case "store manager":
+                userName = ConfigurationReader.getValue("store.manager.username");
+                break;
+            case "sales manager":
+                userName = ConfigurationReader.getValue("sales.manager.username");
+                break;
+            default:
+                throw new RuntimeException("Invalid role!");
         }
         login(userName, password);
     }
