@@ -124,16 +124,15 @@ public class BrowserUtils {
      * @param webElement of element
      */
     public static void clickWithWait(WebElement webElement) {
-
-        WebDriverWait wait = (WebDriverWait) new FluentWait<>(Driver.get())
+        Wait wait = new FluentWait<>(Driver.get())
                 .withTimeout(Duration.ofSeconds(15))
-                .pollingEvery(Duration.ofMillis(200))
+                .pollingEvery(Duration.ofMillis(800))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(ElementNotVisibleException.class)
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(WebDriverException.class);
-        WebElement element = wait.until(driver -> webElement);
+        WebElement element = (WebElement) wait.until((Function<WebDriver, WebElement>) driver -> webElement);
         try {
             element.click();
         } catch (WebDriverException e) {
@@ -143,7 +142,6 @@ public class BrowserUtils {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            element.click();
         }
     }
 
