@@ -124,7 +124,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.0.0-M5</version>
                         <configuration>
-                            <runOrder>Alphabetical</runOrder>
+                            <parallel>methods</parallel>
+                            <perCoreThreadCount>false</perCoreThreadCount>
+                            <threadCountMethods>2</threadCountMethods>
                             <includes>
                                 <include>**/RegressionRunner.java</include>
                             </includes>
