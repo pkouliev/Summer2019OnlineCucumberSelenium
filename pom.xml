@@ -146,7 +146,7 @@
                                 </goals>
                                 <configuration>
                                     <projectName>Cucumber HTML Reports</projectName>
-                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/regression</outputDirectory>
                                     <inputDirectory>${project.build.directory}</inputDirectory>
                                     <jsonFiles>
                                         <param>**/cucumber*.json</param>
