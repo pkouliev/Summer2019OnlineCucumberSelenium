@@ -18,7 +18,7 @@ public class Driver {
 
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver get() {
         //if this thread doesn't have a web driver yet - create it and add to pool
         if (driverPool.get() == null) {
             System.out.println("TRYING TO CREATE DRIVER");

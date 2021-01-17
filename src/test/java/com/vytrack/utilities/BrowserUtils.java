@@ -62,7 +62,7 @@ public class BrowserUtils {
      * @return element once visible
      */
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeToWaitInSec);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -72,8 +72,8 @@ public class BrowserUtils {
      * @param element page element needs to be clicked
      */
     public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].click();", element);
     }
 
     /**
@@ -84,7 +84,7 @@ public class BrowserUtils {
      * @return element once clickable
      */
     public static WebElement waitForClickablility(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -101,7 +101,7 @@ public class BrowserUtils {
         SimpleDateFormat df = new SimpleDateFormat("-yyyy-MM-dd HH-mm");
         String date = df.format(new Date());
         // TakesScreenshot ---> interface from selenium which takes screenshots
-        TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
+        TakesScreenshot ts = (TakesScreenshot) Driver.get();
         File source = ts.getScreenshotAs(OutputType.FILE);
         // full path to the screenshot location
         //System.getProperty("user.dir") returns path to the project as a string
@@ -125,7 +125,7 @@ public class BrowserUtils {
      */
     public static void clickWithWait(WebElement webElement) {
 
-        Wait wait = new FluentWait<>(Driver.getDriver())
+        WebDriverWait wait = (WebDriverWait) new FluentWait<>(Driver.get())
                 .withTimeout(Duration.ofSeconds(15))
                 .pollingEvery(Duration.ofMillis(200))
                 .ignoring(NoSuchElementException.class)
@@ -133,7 +133,7 @@ public class BrowserUtils {
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(WebDriverException.class);
-        WebElement element = (WebElement) wait.until((Function<WebDriver, WebElement>) driver -> webElement);
+        WebElement element = wait.until(driver -> webElement);
         try {
             element.click();
         } catch (WebDriverException e) {
@@ -156,7 +156,7 @@ public class BrowserUtils {
         ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
         ExpectedCondition<Boolean> expectation2 = driver -> ((JavascriptExecutor) driver).executeScript("return jQuery.active == 0").equals(true);
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.get(), timeOutInSeconds);
             wait.until(expectation);
             wait.until(expectation2);
         } catch (Throwable error) {
@@ -165,7 +165,7 @@ public class BrowserUtils {
     }
 
     public static void waitForPageTitle(String pageTitle) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
         wait.until(ExpectedConditions.titleIs(pageTitle));
 
     }
@@ -173,7 +173,7 @@ public class BrowserUtils {
     /**
      * This method will convert list of web elements into list of strings
      *
-     * @param listOfWebElements
+     * @param listOfWebElements list of web elements
      * @return list of strings
      */
     public static List<String> getListOfStrings(List<WebElement> listOfWebElements) {
@@ -197,7 +197,7 @@ public class BrowserUtils {
         while (counter < attempts) {
             try {
                 //selenium must look for element again
-                clickWithJS(Driver.getDriver().findElement(by));
+                clickWithJS(Driver.get().findElement(by));
                 //if click is successful - then break
                 break;
             } catch (WebDriverException e) {
@@ -213,11 +213,11 @@ public class BrowserUtils {
     }
 
     public static void waitForPresenceOfElement(By by, long time) {
-        new WebDriverWait(Driver.getDriver(), time).until(ExpectedConditions.presenceOfElementLocated(by));
+        new WebDriverWait(Driver.get(), time).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void clickWithTimeOut(WebElement element, int timeout) {

@@ -18,7 +18,7 @@ public class LoginStepDefinitions {
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
         System.out.println("I am on the login page");
-        Driver.getDriver().get(ConfigurationReader.getValue("url"));
+        Driver.get().get(ConfigurationReader.getValue("url"));
     }
 
     @Then("user logs in as store manager")
@@ -91,6 +91,6 @@ public class LoginStepDefinitions {
     @Then("the page title should be {string}")
     public void the_page_title_should_be(String title) {
         BrowserUtils.waitForPageTitle(title);
-        Assert.assertEquals("Title is incorrect", title, Driver.getDriver().getTitle());
+        Assert.assertEquals("Title is incorrect", title, Driver.get().getTitle());
     }
 }

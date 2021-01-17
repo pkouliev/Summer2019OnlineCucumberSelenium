@@ -14,7 +14,7 @@ public class Hook {
     public void setup() {
         BrowserUtils.space();
         System.out.println("Test setup!");
-        Driver.getDriver().manage().window().maximize();
+        Driver.get().manage().window().maximize();
     }
 
     @After
@@ -22,7 +22,7 @@ public class Hook {
         // if test failed - do this
         if (scenario.isFailed()) {
             System.out.println("Test failed");
-            byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            byte[] screenshot = ((TakesScreenshot) Driver.get()).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot, "image/png", "Failed Test Screenshot");
         } else {
             System.out.println("Cleanup!");

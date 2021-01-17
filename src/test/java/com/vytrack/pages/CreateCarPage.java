@@ -58,7 +58,7 @@ public class CreateCarPage extends BasePage {
         // locator for checkbox is based on label name
         // label and checkbox are siblings
         String locator = "//label[text()='" + tagName + "']/preceding-sibling::input[@type='checkbox']";
-        WebElement checkBox = Driver.getDriver().findElement(By.xpath(locator));
+        WebElement checkBox = Driver.get().findElement(By.xpath(locator));
         BrowserUtils.waitForVisibility(checkBox, 15);
         BrowserUtils.waitForClickablility(checkBox, 15);
         if (!checkBox.isSelected()) {
@@ -83,7 +83,7 @@ public class CreateCarPage extends BasePage {
         BrowserUtils.waitForClickablility(fuelTypeElement, 15);
         fuelTypeElement.click();
 
-        WebElement fuelTypeSelectionElement = Driver.getDriver().findElement(By.xpath(locator));
+        WebElement fuelTypeSelectionElement = Driver.get().findElement(By.xpath(locator));
         BrowserUtils.waitForClickablility(fuelTypeSelectionElement, 15);
         fuelTypeSelectionElement.click();
     }
@@ -96,7 +96,7 @@ public class CreateCarPage extends BasePage {
      */
     public void uploadLogo(String pathToFile) {
         BrowserUtils.waitForVisibility(logoElement, 15);
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 15);
         wait.until(ExpectedConditions.textToBePresentInElement(logoElement, logoElement.getText()));
         logoElement.sendKeys(pathToFile);
     }

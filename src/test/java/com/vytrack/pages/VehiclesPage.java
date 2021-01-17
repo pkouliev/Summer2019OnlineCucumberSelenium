@@ -17,7 +17,7 @@ public class VehiclesPage extends BasePage {
      * Method already contains waits to handle synchronization issues
      */
     public void clickToCreateCar() {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), 15);
         BrowserUtils.waitForVisibility(createCarElement, 15);
         BrowserUtils.waitForClickablility(createCarElement, 15);
         wait.until(ExpectedConditions.textToBePresentInElement(createCarElement, "Create Car"));
