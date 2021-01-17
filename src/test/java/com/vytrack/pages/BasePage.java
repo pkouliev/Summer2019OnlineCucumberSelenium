@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 //so we can keep them here
 public class BasePage {
 
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+    WebDriverWait wait = new WebDriverWait(Driver.get(), 15);
 
     @FindBy(css = "div[class='loader-mask shown']")
     public WebElement loaderMask;
@@ -49,7 +49,7 @@ public class BasePage {
 
     public BasePage() {
         //this method requires to provide webdriver object for @FindBy
-        PageFactory.initElements(Driver.getDriver(), this);
+        PageFactory.initElements(Driver.get(), this);
     }
 
     /**
@@ -93,7 +93,7 @@ public class BasePage {
         //waitUntilLoaderMaskDisappear();
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleLocator)));
 
-        WebElement module = Driver.getDriver().findElement(By.xpath(moduleLocator));
+        WebElement module = Driver.get().findElement(By.xpath(moduleLocator));
         //wait.until(ExpectedConditions.visibilityOf(module));
         waitUntilLoaderMaskDisappear();
 //        wait.until(ExpectedConditions.elementToBeClickable(module));
@@ -101,15 +101,15 @@ public class BasePage {
 //        module.click(); // once we clicked on module, submodule should be visible
 
         try {
-            BrowserUtils.waitForClickablility(Driver.getDriver().findElement(By.xpath(moduleLocator)), 5);
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+            BrowserUtils.waitForClickablility(Driver.get().findElement(By.xpath(moduleLocator)), 5);
+            WebDriverWait wait = new WebDriverWait(Driver.get(), 15);
             wait.until(ExpectedConditions.textToBePresentInElement(module, moduleName));
-            new Actions(Driver.getDriver()).moveToElement(module).pause(200).doubleClick(module).build().perform();
+            new Actions(Driver.get()).moveToElement(module).pause(200).doubleClick(module).build().perform();
         } catch (Exception e) {
             BrowserUtils.clickWithWait(By.xpath(moduleLocator), 5);
         }
 
-        WebElement subModule = Driver.getDriver().findElement(By.xpath(subModuleLocator));
+        WebElement subModule = Driver.get().findElement(By.xpath(subModuleLocator));
 //        waitUntilLoaderMaskDisappear();
 //        wait.until(ExpectedConditions.visibilityOf(subModule));
 //        wait.until(ExpectedConditions.elementToBeClickable(subModule));
@@ -119,13 +119,13 @@ public class BasePage {
 
         try {
             BrowserUtils.waitForPresenceOfElement(By.xpath(subModuleLocator), 5);
-            BrowserUtils.waitForClickablility(Driver.getDriver().findElement(By.xpath(subModuleLocator)), 5);
-            BrowserUtils.scrollToElement(Driver.getDriver().findElement(By.xpath(subModuleLocator)));
+            BrowserUtils.waitForClickablility(Driver.get().findElement(By.xpath(subModuleLocator)), 5);
+            BrowserUtils.scrollToElement(Driver.get().findElement(By.xpath(subModuleLocator)));
             wait.until(ExpectedConditions.textToBePresentInElement(subModule, subModuleName));
-            Driver.getDriver().findElement(By.xpath(subModuleLocator)).click();
+            Driver.get().findElement(By.xpath(subModuleLocator)).click();
         } catch (Exception e) {
-            BrowserUtils.waitForStaleElement(Driver.getDriver().findElement(By.xpath(subModuleLocator)));
-            BrowserUtils.clickWithTimeOut(Driver.getDriver().findElement(By.xpath(subModuleLocator)), 5);
+            BrowserUtils.waitForStaleElement(Driver.get().findElement(By.xpath(subModuleLocator)));
+            BrowserUtils.clickWithTimeOut(Driver.get().findElement(By.xpath(subModuleLocator)), 5);
         }
 
         waitUntilLoaderMaskDisappear();
