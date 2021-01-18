@@ -1,0 +1,76 @@
+My framework:
+
+    In my current project, I use Java along with Maven.
+
+    Maven - it's project build tool, and also use to manage dependencies and plugins.
+
+	TDD - Test Driven Development (when I create unit tests first and then develop a functionality)
+
+	DDT - data driven testing (when your test data is separated from the code. Instead of having tests data written
+	as java variables, we pull test data from external source, such as feature file, excel file or csv file)
+
+	BDD - behavior driven development. I use Cucumber as a BDD tool to develop test scenarios from end-user perspective.
+	Thus, my tests are readable for non-technical people. I combine BDD with DDT framework to run as hybrid one.
+
+	BDD emerged from and extends TDD.
+	Instead of writing unit tests from specification why not make the specification a test itself.
+	The main idea is that business analysts, project managers, users or anyone without technical,
+	but with sufficient business, knowledge can define tests.
+
+	In simple words, we write tests from end-user perspective.
+
+	Feature: Reset password
+		As user, I want to be able to reset password
+
+		Scenario: reset password by using email
+			Given user is on the landing page
+			Then user click on "reset password" button
+			And user enters valid email "email@email.com" to receive reset link
+
+	To write tests scenarios, we use domain specific language - Gherkin.
+
+PO tells what she wants --> BA writes down requirements into Jira Stories
+--> Developers, Testers, BA, and other people are looking into same business requirements.
+
+We develop test scenarios based on acceptance criteria.
+(In my case, I was doing (99% opposite, pretty much reverse way))
+
+There is no one correct way, every project is unique. So you can say pretty much anything.
+
+#Tell me about your current framework?
+
+In my current project, we use Java along with Maven.
+Our framework is a combination of BDD and DDT frameworks so we call it Hybrid.
+
+We use Cucumber as a BDD tool do develop test scenarios from end-user perspective.
+Thus, our test scenarios are readable for non-technical people.
+We store test scenarios in feature files.
+
+Also, we follow Page Object Model design pattern.
+Basically we create corresponded page class for every page of application.
+It helps to organize code, specifically webelements and separate test from page logic.
+Every page class stores web elements and relevant to the particular page functional methods.
+
+For example for Login page  we have LoginPage java class, under pages package.
+
+We use ThreadLocal driver to ensure thread safety and run tests in parallel.
+
+Besides pages package, we have package with step definitions,
+where we store code implementation for cucumber test steps.
+
+Then we have utilities package, where we store reusable methods and Driver class.
+For configuration, we use properties file.
+Last but not least, we schedule smoke and regression tests in Jenkins by pulling code from github.
+
+Maven - it's a project build tool, and also used to manage dependencies.
+Maven has it's own life-cycle (it's a group of commands that maven executes to build,
+test and deploy project)
+
+
+Cucumber flow:
+
+Feature file: inside feature file we write scenarios
+Every scenario consists of tests steps.
+Every test step must start with gherkin keyword: Given, When, Then, And, But
+Every test step also has a code implementation, which calls step definition.
+Inside step definition, we perform actions and assertions, by using page objects
