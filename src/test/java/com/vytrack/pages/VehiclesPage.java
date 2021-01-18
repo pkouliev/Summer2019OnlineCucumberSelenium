@@ -12,6 +12,9 @@ public class VehiclesPage extends BasePage {
     @FindBy(xpath = "//*[@title='Create Car']")
     public WebElement createCarElement;
 
+    @FindBy(xpath = "//*[text()='License Plate']")
+    public WebElement licensePlateLabel;
+
     /**
      * Use this method to click on "Create Car" button
      * Method already contains waits to handle synchronization issues
