@@ -1,0 +1,55 @@
+CI/CD
+
+Jenkins is a CI/CD tool
+
+     The goal is a shorter release cycle.
+     So end users can get new version of application, with new features of with fixed bugs, faster.
+
+     Faster software release --> better software --> higher client satisfaction
+
+     Before releasing a new software, regression testing MUST be executed.
+
+     Regression testing can be done manually or automatically.
+
+     Manually takes time, less accurate.
+
+     If regression testing is done manually, forget about short release cycles, and it can take some weeks.
+     If done automatically, it can take few hours.
+
+     Because of parallel testing and running up to 35-40 browsers at once, automation is necessary through
+     multiple servers to distribute tests and execute them faster.
+     Regression can run in stage environment as well.
+
+     At least, every company have to have 4 environments: dev --> qa --> stage --> production
+     All environments have same application, but with different version.
+     Newest version in dev, oldest in production.
+
+     Every environment has it's own database, and all of them, except PRODUCTION, have dummy/fake data.
+
+        #dev - reserved for developers, once changes were committed, devs can build a new version
+        of software and deploy it to dev environment.
+               dev.vytrack.com
+
+        #qa - reserved for testers, this is where we do testing
+              qa.vytrack.com
+
+        #stage - preparation for release, this is where performance and UAT testing can be done before release
+                 stage.vytrack.com
+
+        #production - environment of end-user, real data
+                      vytrack.com
+
+CI - Continues Integration
+     it's a process of continuous and automated building of new code changes
+     or
+     it's software development practice, where developers use vcs and integrate frequently their changes.
+     also, those changes will be automatically tested. (code quality scans, unit and integration tests)
+     encourage developers to commit changes often, so they can be tested and integrated into main branch.
+     Also, developers will receive a feedback more often.
+
+     it's easier to digest small pieces little by little rather digesting huge bulk at once.
+
+CD - Continues Delivery / Continues Deployment
+
+     deployment - process of creating a new build and delivering it to the application server.
+     application server - program that makes webb application running and accessible over the vrowser.
