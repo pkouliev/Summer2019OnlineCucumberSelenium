@@ -42,9 +42,6 @@ public class CreateCarPage extends BasePage {
     @FindBy(name = "custom_entity_type[Color]")
     public WebElement colorElement;
 
-    @FindBy(xpath = "//*[text()='License Plate']")
-    public WebElement licensePlateLabel;
-
 
     /**
      * This method stands for selecting tags
@@ -110,15 +107,12 @@ public class CreateCarPage extends BasePage {
     }
 
     public void clickSaveAndNew() {
-        waitUntilLoaderMaskDisappear();
         BrowserUtils.clickWithWait(saveAndCloseToggle);
         BrowserUtils.waitForVisibility(saveAndNewButtonElement, 5);
         BrowserUtils.clickWithWait(saveAndNewButtonElement);
-        waitUntilLoaderMaskDisappear();
     }
 
     public void clickSaveAndClose() {
-        waitUntilLoaderMaskDisappear();
         BrowserUtils.clickWithWait(saveAndCloseToggle);
         BrowserUtils.waitForVisibility(saveAndCloseButtonElement, 5);
         BrowserUtils.clickWithWait(saveAndCloseButtonElement);
