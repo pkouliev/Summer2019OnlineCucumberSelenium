@@ -1,0 +1,166 @@
+Jenkins
+
+Jenkins Job
+
+Jenkins Pipeline
+
+##############################################################
+
+Go to AWS console, and find your EC2 that you created there.
+
+We use same EC2 instance for SQL and Jenkins.
+
+Public IPv4 DNS - address of your EC2 virtual machine
+
+Every device that is connected to the Internet must have unique address.
+IP - it's unique address that is given to every device.
+On top of IP, we have DNS (domain name server).
+
+DNS - it's like google.com or facebook.com instead IP address
+
+To access specific program, we need to add PORT number after :
+EC2 jenkins is running on port 8081
+
+PORT - it's like an apartment number.
+DNS address:8081
+
+For SQL Oracle it's 1521
+
+Once you see jenkins homepage, by default your credentials would be:
+username: admin
+password: admin
+
+Then what is Jenkins?
+Jenkins - it's a CI/CD tool.
+We use Jenkins to achieve continues integration/delivery/deployment
+
+Why Jenkins is so cool?
+Jenkins is open source (free)
+Supports pipeline
+Has huge community
+A lot of plugins
+
+In Jenkins, we create jobs to automate all sort of tasks related to building, testing, delivering and deploying software.
+
+We can create simple job or pipeline to automate build process.
+
+Any job consists of stages:
+
+    Let's say I want to automate smoke test, what steps I need to follow?
+
+1. Pull code from repository (github)
+2. We need to specify maven goal (mvn test)
+3. Generate cucumber HTML report
+4. Send email
+5. We can publish tests results on jira with xray, (optional, not every single company has xray)
+    If xray is not available, I can attach link with Cucumber report to ticket, or through API using jira documentation.
+    Without xray or any additional plugins, I can automate jira through API.
+    Like create ticket, leave comment, attach something...
+
+#########################################################################
+
+if smoke test fails, that means environment or some services are down.
+server is down - not working, if not working - you cannot perform testing.
+If it happens, we must immediately notify team, so appropriate actions can be taken to fix it.
+To notify team automatically, we can include email notification into jenkins job.
+
+How to run smoke test at specific time?
+Let's say in a morning....
+We can specify build triggers:
+    build triggers used to automatically build our project (run tests in our case)
+
+#########################################################################
+
+hudson, it's an old name of jenkins
+
+Steps to create Jenkins job for Vytrack smoke test:
+
+1. Click on New item
+
+2. Enter name: vytrack_smoke_test, if name is already taken, choose different name, jenkins doesn't like same job names.
+
+3. Select freestyle project
+
+4. Click OK
+(if OK is not clickable, refresh the page. Perhaps, access token expired and you need to login again.)
+
+All projects will be listed on jenkins dashboard
+
+5. According to our plan, first step is: "pulling code from github"
+        under Source Code Management, select git and provide URI of project,
+        like: https://github.com/{........}/Summer2019OnlineCucumberSelenium.git
+
+        I can also specify credentials, if project is private.
+
+        Branching is available as well. By default we use master branch.
+
+6. Specify Build Triggers (at what time run tests)
+    Select - Build periodically and time format 0 5 * * *
+    In this case, smoke test will be running every single day at 5am.
+
+    MINUTE HOUR DOM MONTH DOW
+    MINUTE	Minutes within the hour (0–59)
+    HOUR	The hour of the day (0–23)
+    DOM	The day of the month (1–31)
+    MONTH	The month (1–12)
+    DOW	The day of the week (0–7) where 0 and 7 are Sunday.
+
+    Let's say, we want to exclude weekend
+    0 and 7 are Sunday. 1 - Monday.
+    Monday - Friday: 1-5
+
+7. Go to Build --> Click on "add build step" and select "invoke top-level maven targets"
+   to be able to execute maven life-cycle commands like test, verify, install, deploy...
+   enter command: clean  mvn test -Dcucumber.options="--tags @smoke_test"
+
+   No need to specify mvn in the beginning.
+
+   cucumber.options="--tags @smoke_test" - will override cucumber options that we specified in CucumberRunner class.
+
+   @smoke_test - represents all features and scenarios that are used for smoke test.
+   When we include this tag, we can run only these specific scenarios and ignore others.
+
+8. Go to Post-Build Actions and click "add post-build actions" --> select cucumber report.
+   This plugin is independent from plugin.pom.xml file.
+   Only one important thing: it needs cucumber.json file to work.
+
+   plugin = {
+              "json:target/cucumber.json",
+            }
+
+I don't change cucumber reports configuration, it works by default.
+
+!!!! To run Jenkins job, click BUILD NOW!!!!!
+
+Jenkins keeps history of builds, so you can find console output and
+reports for every single smoke test job from the beginning.
+
+9. Go to Post-build Actions and click "add post-build action" --> select Editable Email Notifications
+
+To change jenkins URL, go to Jenkins -> Manage Jenkins -> Configure System.
+Scroll down to the bottom and find jenkins location.
+Insert IP or DNS of your EC2, like http://{.....}.compute-1.amazonaws.com:8081/
+
+Find DNS of your Jenkins on AWS Console
+
+Then click save.
+
+$DEFAULT_RECIPIENTS - whenever we see $something - it's an environment variable.
+List of them can be found on jenkins website:
+https://wiki.jenkins.io/display/JENKINS/Building+a+software+project
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
