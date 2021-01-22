@@ -111,11 +111,11 @@ All projects will be listed on jenkins dashboard
 
 7. Go to Build --> Click on "add build step" and select "invoke top-level maven targets"
    to be able to execute maven life-cycle commands like test, verify, install, deploy...
-   enter command: clean  mvn test -Dcucumber.options="--tags @smoke_test"
+   enter command: "clean test -Dcucumber.options="--tags @smoke_test"
 
    No need to specify mvn in the beginning.
 
-   cucumber.options="--tags @smoke_test" - will override cucumber options that we specified in CucumberRunner class.
+   "cucumber.options="--tags @smoke_test" - will override cucumber options that we specified in CucumberRunner class.
 
    @smoke_test - represents all features and scenarios that are used for smoke test.
    When we include this tag, we can run only these specific scenarios and ignore others.
