@@ -14,7 +14,7 @@ public class Hook {
     public void setup() {
         BrowserUtils.space();
         System.out.println("Test setup!");
-        Driver.get().manage().window().maximize();
+        //Driver.get().manage().window().maximize();
     }
 
     @After
