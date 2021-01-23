@@ -29,6 +29,8 @@ public class Driver {
             System.out.println("TRYING TO CREATE DRIVER");
             // this line will tell which browser should open based on the value from properties file
             String browserParamFromEnv = System.getProperty("browser");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
             String browser = browserParamFromEnv == null ? ConfigurationReader.getValue("browser") : browserParamFromEnv;
             switch (browser) {
                 case "chrome":
@@ -68,8 +70,7 @@ public class Driver {
                     WebDriverManager.getInstance(SafariDriver.class).setup();
                     driverPool.set(new SafariDriver());
                     break;
-                case "remote_chrome":
-                    ChromeOptions chromeOptions = new ChromeOptions();
+                case "remote_chrome_local":
                     chromeOptions.setCapability("platform", Platform.ANY);
                     try {
                         driverPool.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions));
@@ -77,6 +78,24 @@ public class Driver {
                         e.printStackTrace();
                     }
                     break;
+                case "remote_chrome_EC2":
+                    chromeOptions.setCapability("platform", Platform.ANY);
+                    try {
+                        driverPool.set(new RemoteWebDriver(new URL("http://ec2-54-166-190-92.compute-1.amazonaws.com:4444/wd/hub"), chromeOptions));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "remote_firefox_EC2":
+
+                    firefoxOptions.setCapability("platform", Platform.ANY);
+                    try {
+                        driverPool.set(new RemoteWebDriver(new URL("http://ec2-54-165-248-104.compute-1.amazonaws.com:4444/wd/hub"), firefoxOptions));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
             }
 
         }
